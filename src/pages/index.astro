@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import FaceDiagram from '../components/FaceDiagram.astro';
+import ShapeIcon from '../components/ShapeIcon';
+import FAQ from '../components/FAQ.astro';
+import Icon from '../components/Icon.astro';
+import FaceTool from '../components/tool/FaceTool';
+import { faceShapePath, shapes, titleCase, type FaceShape } from '../config';
+import { faqs } from '../content';
+const homeFaqs = faqs.slice(0, 5);
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: homeFaqs.map(({ q, a }) => ({
+    '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+const shapeChecks: Record<FaceShape, string> = {
+  oval: 'An oval outline is moderately longer than it is wide. The cheekbones are usually the broadest point, with a small difference in width at the temples and jaw. Follow the curve from the cheek down toward the chin. It usually tapers gradually. If length is the first thing you notice, compare oblong. A sharper change in width on either side of the cheekbones is a clue to check diamond.',
+  round: 'Start with the span across the cheeks and compare it with the visible length. On a round outline, the two are relatively close and the lower edge curves toward the chin. Check how the jaw turns below each ear. A clear corner and a jaw close to the cheekbones in width suggest square. Use a relaxed expression for the comparison, since a smile can push the cheeks outward.',
+  square: 'Check whether the temples, cheeks and jaw have roughly similar widths. The jaw tends to stay broad until it turns in toward the chin. The location of that turn gives you a better clue than an exact length-to-width ratio. If you also see a distinctly long outline, compare oblong. If the edges are softer and the proportions look compact, look at round.',
+  heart: 'Look at the difference between the temples and jaw. A heart outline stays broad through the upper part and narrows below the cheeks. A pointed chin can make the taper easier to see. The hairline can have any shape. Sweep hair away from the temples before comparing widths. When the cheekbones extend much farther out than the temples, look at diamond too.',
+  diamond: 'Find the broadest span across the cheekbones, then see whether both the temples and the jaw pull inward. Compare the outer edges rather than the highlights on your cheeks. A narrow jaw also appears in heart outlines, so the temple width helps you tell them apart. If the transition from the cheeks to the temples is slight and gradual, consider oval.',
+  oblong: 'Look for a noticeably long outline relative to the distance across your cheekbones. The sides often keep more of their width before turning in toward the chin, which can distinguish it from oval. The jaw can be curved or angular. Check a second photo taken at eye level if the first was a close selfie. A head tilt or a cropped forehead can change the apparent length.',
+};
+---
+<Base title="Face Shape: How to Find Yours" description="Find your face shape with a free, private photo check. Compare six common outlines, understand your proportions, and explore hairstyle and glasses ideas." structuredData={[faqSchema]}>
+  <section class="home-hero">
+    <div class="container hero">
+      <div class="screen-only">
+        <h1>Understand your <span>face shape</span></h1>
+        <p class="hero-description">Choose a photo or take one to compare your outline with six common shapes. The free check runs in your browser.</p>
+      </div>
+      <div class="home-tool" id="analyze">
+        <FaceTool client:load compact />
+        <noscript><p class="notice">Enable JavaScript to check a photo, or try the <a href="/what-is-my-face-shape/">manual comparison</a>.</p></noscript>
+      </div>
+      <a class="text-link screen-only" href="#face-shapes">Compare the six outlines <Icon name="arrow-down"/></a>
+    </div>
+  </section>
+  <section class="container study-preview" aria-label="Illustrative analysis preview">
+    <div class="study-panel"><div class="panel-heading"><span class="panel-title">Your face, mapped</span><span class="panel-label"><Icon name="shield"/> On-device</span></div><div class="study-face"><FaceDiagram/></div><div class="panel-footnote">Illustration only · not a real analysis</div></div>
+    <div class="study-panel study-insights"><div class="panel-heading"><span class="panel-title">Your personal style study</span><span class="panel-label">Example report</span></div><div class="study-content"><span class="eyebrow">A LITTLE MORE INSIGHT</span><h2>What a face shape result shows</h2><p>See the geometry behind your shape, then explore a few new possibilities.</p><div class="example-shape"><ShapeIcon shape="oval"/><div><span class="tiny-label">ILLUSTRATIVE SHAPE</span><strong>Oval</strong><p>One of six outlines to explore.</p></div><span class="example-badge">Example</span></div><div class="example-metrics"><div><span>Face length / width</span><strong>1.38</strong></div><div><span>Cheekbone / jaw</span><strong>1.24</strong></div><div><span>Upper face / cheekbone</span><strong>0.89 <small>est.</small></strong></div></div><div class="study-bottom"><p>Descriptive ratios. Never a beauty score.</p><a class="text-link" href="/face-proportions/">Understand the measurements <Icon name="arrow-right"/></a></div></div></div>
+  </section>
+  <section class="container section" id="how-it-works"><div class="section-head"><div><span class="eyebrow">A LITTLE CLARITY, IN THREE STEPS</span><h2>How the face shape check works</h2></div><p>One photo is the starting point.<br/>Your style is always your choice.</p></div><div class="steps-grid"><article><span class="step-number">01</span><div class="step-symbol">↥</div><h3>Start with a photo</h3><p>Choose a clear, front-facing photo or use your camera. Keep your full face in view.</p></article><article><span class="step-number">02</span><div class="step-symbol">⌖</div><h3>Compare your proportions</h3><p>See your face shape and the proportions behind it, with an easy-to-read visual guide.</p></article><article><span class="step-number">03</span><div class="step-symbol">✧</div><h3>Explore style ideas</h3><p>Find hairstyle and glasses inspiration, then save your personal report for later.</p></article></div></section>
+  <section class="container section feature-split">
+    <div><span class="eyebrow">START WITH A STRAIGHT VIEW</span><h2>How to tell your face shape</h2>
+      <p>Use a straight-on photo taken at eye level, or look into a mirror with your head level. Pull hair away from your temples and relax your jaw. If you take a photo, step back from the lens so your nose, cheeks and jaw are all seen from a similar distance. Avoid a raised camera, a tilted head and a wide smile when you compare outlines.</p>
+      <p>Compare the outline before choosing a label. First ask whether the face looks distinctly long or whether its length and width are fairly close. Then find the broadest part and follow how the sides turn into the chin. The pattern across those observations is more useful than any one number.</p>
+      <a class="text-link" href="/what-is-my-face-shape/">Try the step-by-step face shape check ↗</a>
+    </div>
+    <div class="proportion-preview"><h3>Four measurements behind face shape</h3>
+      <dl class="measurement-list">
+        <div><dt>Visible face length</dt><dd>The vertical span from the top of the visible forehead region to the chin. A hairline hidden by fringe is a poor reference point.</dd></div>
+        <div><dt>Cheekbone width</dt><dd>The span across the outer cheeks at cheekbone level. Use this as a reference for the widths above and below.</dd></div>
+        <div><dt>Upper-face width</dt><dd>The width near the temples. The tool estimates this from landmarks; it does not map the hairline.</dd></div>
+        <div><dt>Jaw width</dt><dd>The span across the sides of the lower face. Notice the turn into the chin as well as the width itself.</dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="tinted section" id="face-shapes"><div class="container"><div class="section-head"><div><span class="eyebrow">GET TO KNOW YOUR OUTLINE</span><h2>Six face shapes and how to spot them</h2></div><a class="text-link" href="/face-shape-guide/">Compare all six outlines ↗</a></div><p class="section-intro">Use these clues to narrow down your options. Many people see traits from more than one outline.</p><div class="shape-grid shape-check-grid">{shapes.map(shape => <article class="shape-card shape-check"><ShapeIcon shape={shape}/><h3>{titleCase(shape)}</h3><p>{shapeChecks[shape]}</p><a class="text-link" href={faceShapePath(shape)}>Read the {shape} guide ↗</a></article>)}</div></div></section>
+  <section class="container section feature-split"><div class="proportion-preview"><span class="tiny-label">THE DETAILS BEHIND YOUR SHAPE</span><div class="ratio-preview"><span>Face length / width</span><strong>1.38<small> : 1</small></strong></div><div class="ratio-line"><span></span><i></i></div><div class="mini-metrics"><div><span>Cheekbone / jaw</span><strong>1.24</strong></div><div><span>Upper face / cheekbone</span><strong>0.89<small> est.</small></strong></div></div><p>Illustrative measurements · not an ideal or target</p></div><div><span class="eyebrow">UNDERSTAND, DON’T COMPARE</span><h2>Face shape and facial proportions</h2><p>See how face length, cheekbones and jaw width relate to each other. Clear measurement lines help you understand why a shape was suggested.</p><p>These are descriptions of your features. Never judgments, beauty scores, or standards to live up to.</p><a class="text-link" href="/face-proportions/">A guide to facial proportions ↗</a></div></section>
+  <section class="container inspiration-grid"><article class="inspiration hair-inspiration"><span class="eyebrow">A FRESH PERSPECTIVE</span><h2>Hairstyles by face shape</h2><p>Layers, length, volume and parting.<br/>Explore styles that feel like you.</p><a class="text-link" href="/hairstyles-for-face-shapes/">Find hairstyle inspiration ↗</a><div class="hair-art" aria-hidden="true"><span>〰</span><span>〰</span><span>〰</span></div></article><article class="inspiration glasses-inspiration"><span class="eyebrow">A DIFFERENT POINT OF VIEW</span><h2>Glasses by face shape</h2><p>From soft curves to clean angles.<br/>Discover a few new favorites.</p><a class="text-link" href="/glasses-for-face-shapes/">Explore glasses styles ↗</a><svg class="glasses-art" viewBox="0 0 250 110" fill="none" aria-hidden="true"><path d="M18 29h82l-7 55Q56 105 25 78Zm132 0h82l-7 49q-31 27-68 6Z" stroke="currentColor" stroke-width="6"/><path d="M100 43q25-17 50 0M7 30h11m214 0h11" stroke="currentColor" stroke-width="5"/></svg></article></section>
+  <section class="container section"><div class="privacy-banner"><div class="privacy-mark">◈</div><div><span class="eyebrow">PERSONAL INSIGHT. PERSONAL PRIVACY.</span><h2>Your face is not our data.</h2><p>Your photo is analyzed directly in your browser. It is not uploaded to our servers.</p><a class="text-link" href="/privacy/">Here’s how we keep it local ↗</a></div><div class="privacy-list"><span>✓ No photo uploads</span><span>✓ No account required</span><span>✓ You control your downloads</span></div></div></section>
+  <section class="container section faq-section"><div><span class="eyebrow">A FEW THINGS TO KNOW</span><h2>Face shape questions, answered</h2><p>A transparent tool starts with clear answers.</p><a class="text-link" href="/faq/">All questions & answers ↗</a></div><FAQ items={homeFaqs}/></section>
+  <section class="container final-cta"><h2>Ready to check your face shape?</h2><a class="button primary large" href="#analyze">Go to photo check ↑</a></section>
+</Base>

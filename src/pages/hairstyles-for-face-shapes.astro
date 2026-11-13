@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import { shapes, titleCase } from '../config';
+import { recommendations } from '../features/recommendations';
+import StyleIllustration from '../features/recommendations/StyleIllustration';
+---
+<Base title="Hairstyles for Face Shapes: Cuts, Layers & Parting Ideas" description="Explore hairstyle ideas for six face shapes, including hair length, volume, layers and parting. Flexible inspiration for your texture and personal style." breadcrumb="Hairstyle guide">
+<div class="page-head"><span class="eyebrow">YOUR NEXT GOOD HAIR IDEA</span><h1>Find a shape.<br/><em>Make it your style.</em></h1><p>Think of these as ideas to bring to your stylist. Your texture, density, routine and personal taste belong in the conversation, too.</p></div>
+<div class="container"><nav class="inline-links" aria-label="Jump to face shape">{shapes.map(s=><a href={`#${s}`}>{titleCase(s)}</a>)}</nav>{shapes.map(s=><section class="guide-section" id={s}><span class="eyebrow">HAIR IDEAS FOR</span><h2>{titleCase(s)} faces</h2><p>{recommendations[s].consideration}</p><div class="recommendation-grid">{recommendations[s].hairstyles.filter(h=>h.stylePreference==='neutral'||h.hairLength==='long').map(h=><article class="recommendation-card"><StyleIllustration kind={h.illustration}/><div class="card-content"><small>{h.hairLength} length · illustration</small><h3>{h.name}</h3><p>{h.description}</p></div></article>)}</div><div class="filter-row"><p><strong>Volume:</strong> {recommendations[s].volume}</p><p><strong>Parting:</strong> {recommendations[s].parting}</p></div></section>)}<div class="page-foot-cta"><h2>Start with your own proportions.</h2><p>Get shape-based suggestions, then filter by your preferred style and length.</p><a class="button primary" href="/face-shape-detector/">Find my face shape ↗</a></div></div>
+</Base>

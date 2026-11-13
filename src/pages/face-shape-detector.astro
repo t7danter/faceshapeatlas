@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import FAQ from '../components/FAQ.astro';
+import FaceTool from '../components/tool/FaceTool';
+import { brand, faceShapePath, shapes, titleCase, type FaceShape } from '../config';
+const description = 'Use the free face shape detector with a photo or camera. See your closest face shape matches, facial proportions and style ideas. Analysis stays in your browser.';
+const app = {
+  '@context': 'https://schema.org', '@type': 'WebApplication',
+  name: `${brand.name} Face Shape Detector`,
+  url: new URL('/face-shape-detector/', Astro.site).href,
+  description,
+  applicationCategory: 'LifestyleApplication', operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript, WebAssembly and Web Workers in a supported browser.',
+  isAccessibleForFree: true,
+  offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' },
+};
+const outlines: Record<FaceShape, string> = {
+  oval: 'The outline is moderately longer than it is wide. The cheekbones usually hold the greatest width, and the line from cheek to chin tapers gradually. Compare oblong when the length stands out more than the taper.',
+  round: 'Visible length and cheekbone width are relatively close, with a gradual curve along the lower edge. A round match can still have a defined chin. If the jaw stays wide and makes a sharper turn, compare square.',
+  square: 'The temple, cheekbone and jaw spans are relatively similar. The lower edge often holds its width before turning inward toward the chin. A square outline can still be longer than it is wide.',
+  heart: 'The temples or upper cheeks retain more width while the lower jaw narrows. A pointed chin can make the taper easier to see. The hairline can take different forms. Compare diamond if the cheeks project well beyond the temples.',
+  diamond: 'The cheekbones are distinctly wider than both the temples and the jaw. The change above the cheeks helps separate it from heart. A slight, gradual difference in width can fit oval as well.',
+  oblong: 'The visible length stands out relative to cheekbone width. The sides often hold their width farther down the outline, and the jaw can be rounded or angular. Take a level second photo if the first was a close selfie.',
+};
+const photoMistakes = [
+  { title: 'Turning or tilting your head', advice: 'A three-quarter angle makes the far cheek and jaw look narrower. Raising or dropping your chin also changes visible length. Put the lens at eye level, face it straight on, and keep your head upright.' },
+  { title: 'Taking a selfie too close to the lens', advice: 'A close camera makes nearer features look larger relative to those farther away. Step back and use a timer or ask someone to take the picture. Keep enough resolution to see the whole outline.' },
+  { title: 'Cropping or covering the outline', advice: 'The tool needs landmarks around the visible forehead, cheeks and jaw. Leave room above the forehead and below the chin. Move hair away from the temples and remove sunglasses or anything that hides the edges.' },
+  { title: 'Using a dark or blurry photo', advice: 'Hard shadows can hide one side, and motion blur can soften the lower contour. Face a window or an even light source and hold the camera steady. Choose a sharp frame without heavy filters.' },
+  { title: 'Including more than one person', advice: 'Use a photo with one visible face so the measurements apply to the right person. Retake a solo picture if several people are close together. Relax your mouth and jaw so a broad smile does not change the outline.' },
+];
+const detectorFaqs = [
+  { q: 'Can I use my phone camera?', a: 'Yes. Choose Use my camera, then allow camera access in a supported browser over HTTPS. Capture a still photo, review it, and confirm your full outline is visible. You can choose an existing image if the camera is unavailable.' },
+  { q: 'Does the detector upload my photo?', a: 'Image decoding, landmarks and matching run in your browser. The site downloads the analysis software and model as static files. Your photo and measurements stay in memory until you reset or leave the tool.' },
+  { q: 'Why did the tool reject a photo that looks clear?', a: 'A sharp image can still have a small, cropped or rotated face. Read the message below the photo, then retake it with one person at eye level. Show the temples, cheeks and jaw in even light and keep the head centered.' },
+  { q: 'What if two results look equally plausible?', a: 'Read both guides from the result and compare the feature that separates them, such as temple width for heart versus diamond. You can choose either outline to explore its hairstyle and glasses suggestions while keeping the automatic result visible.' },
+  { q: 'Can I get an answer without a photo?', a: 'Use the manual comparison with a mirror. Check visible length, the span across your cheeks, width near the temples and the turn of the jaw. Compare the two closest outlines before deciding which guide to read.' },
+  { q: 'Can I save the measurements and style ideas?', a: 'Use Print / Save PDF or download the PNG card from the result. The report includes your match, proportions and style ideas. Your photo is excluded unless you choose to include it.' },
+];
+---
+<Base title="Free Face Shape Detector" description={description} breadcrumb="Face shape detector" structuredData={[app]}>
+  <div class="page-head"><span class="eyebrow">FREE · PRIVATE · UNIQUELY YOU</span><h1>Free Face Shape Detector</h1><p>Use a photo or your camera to see your closest face shape matches. Your photo is processed on your device.</p></div>
+  <div class="tool-shell"><FaceTool client:load/><noscript><div class="notice">This local analysis tool needs JavaScript. Enable it to analyze a photo, or explore the <a href="/face-shape-guide/">face shape guide</a> without it.</div></noscript></div>
+  <article class="article-layout screen-only">
+    <h2>How to take the face shape test</h2>
+    <ol><li>Choose a sharp, front-facing JPG, PNG or WebP up to 10 MB, or take a photo with your camera.</li><li>Check that your forehead area, cheeks and jaw are visible. Confirm the visibility check, then choose Analyze my face.</li><li>Review the two closest matches and the overlay. Open a guide from your result to compare the shape with its closest alternatives.</li></ol>
+    <h2>What the face shape calculator measures</h2>
+    <p>The tool divides visible face length by cheekbone width, then compares the estimated upper-face and jaw widths with the cheekbones. It also uses the turn in the lower-face contour. The ratios describe the photo and do not depend on its pixel size; they are not measurements in inches or centimeters.</p>
+    <h2>What the six results look like</h2>
+    <p>Open the matching guide from your result to see which features to compare and where nearby outlines overlap.</p>
+    <ul>{shapes.map(shape => <li><a href={faceShapePath(shape)}>{titleCase(shape)}</a> — {outlines[shape]}</li>)}</ul>
+    <h2>How accurate is the face shape detector?</h2>
+    <p>The tool estimates landmarks and compares their proportions with six geometric outlines. A higher match score means that the measured proportions fit one outline more closely in this photo. The scores are heuristic matches. The tool has no published accuracy percentage, and the categories overlap.</p>
+    <p>The temple measurement estimates upper-face width without tracing your hairline. Camera distance, head pose, facial hair, expression and shadows can shift the landmarks. Before trusting a close result, check that the overlay follows the visible edges. If the lines miss your temples or jaw, retake the photo with a straight, evenly lit view.</p>
+    <p>Small differences between the top two matches are common. Compare the feature that distinguishes them before choosing a label. The <a href="/face-proportions/">facial proportions guide</a> explains each ratio, and the <a href="/what-is-my-face-shape/">manual face shape check</a> lets you compare the same features in a mirror.</p>
+    <h2>Five common photo mistakes</h2>
+    <ol>{photoMistakes.map(({ title, advice }) => <li><strong>{title}.</strong> {advice}</li>)}</ol>
+    <h2>Questions about the detector</h2>
+    <FAQ items={detectorFaqs}/>
+  </article>
+</Base>

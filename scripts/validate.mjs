@@ -1,0 +1,3 @@
+import { spawnSync } from 'node:child_process';
+const tasks=[['Type checking','node_modules/astro/bin/astro.mjs','check'],['Lint','node_modules/eslint/bin/eslint.js','src','tests','scripts','--max-warnings','0'],['Unit tests','node_modules/vitest/vitest.mjs','run'],['Local assets','scripts/prepare-assets.mjs'],['Production build','node_modules/astro/bin/astro.mjs','build'],['Static output checks','scripts/verify-static.mjs']];
+for(const [label,...args]of tasks){console.log(`\n${label}`);const result=spawnSync(process.execPath,args,{stdio:'inherit',env:{...process.env,ASTRO_TELEMETRY_DISABLED:'1'}});if(result.status!==0)process.exit(result.status||1);}

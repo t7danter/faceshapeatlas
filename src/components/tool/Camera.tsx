@@ -1,0 +1,20 @@
+import { useEffect, useRef, useState } from 'react';
+export default function Camera({onCapture,onClose}:{onCapture:(file:File)=>void;onClose:()=>void}){
+  const video=useRef<HTMLVideoElement>(null), stream=useRef<MediaStream|null>(null), generation=useRef(0);
+  const [facing,setFacing]=useState<'user'|'environment'>('user'),[active,setActive]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState('');
+  const stop=()=>{generation.current++;stream.current?.getTracks().forEach(t=>t.stop());stream.current=null;if(video.current)video.current.srcObject=null;};
+  useEffect(()=>{const hide=()=>{if(document.hidden){stop();setActive(false);setBusy(false);}};document.addEventListener('visibilitychange',hide);window.addEventListener('pagehide',stop);return()=>{stop();document.removeEventListener('visibilitychange',hide);window.removeEventListener('pagehide',stop);};},[]);
+  async function open(direction=facing){
+    stop();setActive(false);setError('');setBusy(true);const token=generation.current;
+    try{
+      if(!window.isSecureContext||!navigator.mediaDevices?.getUserMedia)throw new Error('Camera access requires HTTPS or localhost and a supported browser. Please upload a photo instead.');
+      const camera=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:direction},width:{ideal:1280},height:{ideal:1280}},audio:false});
+      if(token!==generation.current){camera.getTracks().forEach(t=>t.stop());return;}
+      stream.current=camera;if(video.current){video.current.srcObject=camera;await video.current.play();}
+      if(token!==generation.current)return;setActive(true);
+    }catch(e){if(token!==generation.current)return;stop();setBusy(false);const name=e instanceof DOMException?e.name:'';setError(name==='NotAllowedError'?'Camera permission was not granted. Allow access in your browser settings or upload a photo instead.':name==='NotFoundError'?'No camera was found. Connect a camera or upload a photo.':name==='NotReadableError'?'The camera is in use or unavailable. Close other camera apps or upload a photo.':e instanceof Error?e.message:'The camera could not start. Please upload a photo.');}
+    finally{if(token===generation.current)setBusy(false);}
+  }
+  function capture(){const v=video.current;if(!v||!v.videoWidth)return;setBusy(true);const canvas=document.createElement('canvas');canvas.width=v.videoWidth;canvas.height=v.videoHeight;const ctx=canvas.getContext('2d');if(!ctx){setError('Could not capture the photo. Try uploading instead.');setBusy(false);return;}ctx.drawImage(v,0,0);stop();const token=generation.current;setActive(false);canvas.toBlob(blob=>{canvas.width=canvas.height=0;if(token!==generation.current)return;setBusy(false);if(blob)onCapture(new File([blob],'camera-photo.jpg',{type:'image/jpeg'}));else setError('Could not capture the photo. Try uploading instead.');},'image/jpeg',.94);}
+  return <section className="camera-panel" aria-label="Camera capture"><h2>A photo, just for this analysis.</h2><p>Camera access lets you take one photo locally. No video or audio is uploaded. Face forward at eye level and keep your whole face visible.</p><video ref={video} playsInline muted aria-label="Live camera preview" style={{display:active?'block':'none',transform:facing==='user'?'scaleX(-1)':undefined}}/>{error&&<p role="alert" className="error-box">{error}</p>}<div className="camera-toolbar"><label>Camera<select value={facing} disabled={busy} onChange={e=>{const value=e.target.value as 'user'|'environment';setFacing(value);if(active)void open(value);}}><option value="user">Front camera</option><option value="environment">Rear camera (if available)</option></select></label>{active?<button className="button primary" disabled={busy} onClick={capture}>Capture photo</button>:<button className="button primary" disabled={busy} onClick={()=>void open()}>{busy?'Opening camera…':'Allow camera & open'}</button>}<button className="button" onClick={()=>{stop();onClose();}}>Close camera</button></div></section>;
+}

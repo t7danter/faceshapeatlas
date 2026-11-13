@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { faceShapePath, shapes, titleCase, type FaceShape } from '../config';
+import { recommendations } from '../features/recommendations';
+import StyleIllustration from '../features/recommendations/StyleIllustration';
+
+const fittingNotes: Record<FaceShape, string> = {
+  oval: 'A gentle taper from the cheekbones to the jaw gives you room to try both curved and angular rims. Put a round pair beside a soft rectangle of similar width and color so you can compare the outlines without the size doing most of the work. From the front, check that the outer corners sit near your temples and that your eyes have comfortable room within the lenses.',
+  round: 'A straight top edge or a slight upsweep creates contrast with the curve from the cheeks to the chin. Try a shallow rectangle beside a slightly taller geometric frame to see which line you prefer. Smile while wearing each pair and check whether the lower rims touch your cheeks or lift the frame off the bridge.',
+  square: 'Round metal rims and soft ovals add a curve alongside a defined jaw, while an aviator gives the lower part of the lens more presence. Compare a slim rim with a thicker one to see how much contrast you want. Check that the temples rest comfortably along the sides of your head without flaring outward or pressing inward.',
+  heart: 'A light upper rim draws less attention to the temples, and a curved lower rim adds some visual weight nearer the chin. Try an oval and a fine-rim aviator of similar overall width and compare how the bottom edge sits. Look down and back up to check whether the bridge holds the glasses in place without relying on tight temples.',
+  diamond: 'A small upsweep or a light browline shifts attention upward from prominent cheekbones, while an oval follows their curve more closely. Try both from the front and from a slight angle, since the outer corners can look wider in a straight-on photo. Check that the lower outer rim clears your cheekbones when you smile and that the frame stays level as you move.',
+  oblong: 'A deeper lens occupies more of the space between the brow and the cheek, and a defined top edge gives a long outline a horizontal line. Compare a deeper round frame and a rectangle at a similar overall width so you can judge lens height separately. Look straight ahead and smile to check whether the larger lens still leaves clearance above your cheeks.',
+};
+---
+<Base title="Glasses for Face Shapes: Styles & Fit" description="Compare glasses for face shapes from oval to oblong. Learn which frames to try, how to read lens width, bridge width and temple length, and what to check for fit." breadcrumb="Glasses guide">
+  <div class="page-head">
+    <h1>Glasses for Face Shapes</h1>
+    <p>Compare frames for six facial outlines, then check the width, bridge and arms before you choose a pair.</p>
+  </div>
+  <div class="container">
+    <nav class="inline-links" aria-label="Jump to a shape or frame sizing">
+      {shapes.map(shape => <a href={`#${shape}`}>{titleCase(shape)}</a>)}
+      <a href="#frame-sizing">Frame sizing</a>
+    </nav>
+    {shapes.map(shape => (
+      <section class="guide-section" id={shape}>
+        <h2>Frames to explore for {shape} faces</h2>
+        <p class="frame-fit-copy">{fittingNotes[shape]}</p>
+        <p><a class="text-link" href={faceShapePath(shape)}>{titleCase(shape)} face shape guide ↗</a></p>
+        <div class="recommendation-grid">
+          {recommendations[shape].glasses.map(frame => (
+            <article class="recommendation-card">
+              <StyleIllustration glasses kind={frame.id}/>
+              <div class="card-content">
+                <h3>{frame.name}</h3>
+                <p>{frame.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+    <section class="guide-section" id="frame-sizing">
+      <h2>How to match frame size to your face width</h2>
+      <p class="frame-fit-copy">Start with a pair that fits you comfortably. Look inside one arm for a marking such as <strong>52–18–145</strong>. The numbers refer to lens width, bridge width and temple length in millimeters. Check the overall front width separately when you compare two frames.</p>
+      <dl class="recommendation-grid frame-size-grid">
+        <div class="recommendation-card card-content">
+          <dt>52 mm lens width</dt>
+          <dd>The horizontal width of one lens. A wider lens usually takes up more room across the front. Compare where your eyes sit within the lenses and how much space there is between the outer rims and the sides of your face.</dd>
+        </div>
+        <div class="recommendation-card card-content">
+          <dt>18 mm bridge width</dt>
+          <dd>The gap between the lenses at the bridge. Try the frame on to see where it rests on your nose. The bridge shape and nose pads affect fit, so two pairs with the same number can sit differently.</dd>
+        </div>
+        <div class="recommendation-card card-content">
+          <dt>145 mm temple length</dt>
+          <dd>The length of each arm from the hinge to the tip. Check from the side that the bend sits comfortably around your ear and that the tips do not dig in or stick far out behind it.</dd>
+        </div>
+      </dl>
+      <div class="frame-fit-copy">
+        <h3>Compare overall width first</h3>
+        <p>Measure the front of your current pair from outer edge to outer edge, or use the manufacturer’s overall width if it is listed. Compare that number with a new frame’s front width and check how both pairs sit at your temples. For the example above, two 52 mm lenses plus the 18 mm gap span 122 mm. The actual front can be wider because the rims and end pieces also take up space.</p>
+        <h3>Check fit as you move</h3>
+        <p>Look down to see whether the bridge slides, smile to check cheek clearance, and turn sideways to see how the arms sit behind your ears. If a shape looks right but the frame pinches, try a different width or bridge design. For prescription lenses, ask an optician to check lens depth and centering, especially if you wear progressives. <a class="text-link" href="https://www.specsavers.co.uk/glasses/buyers-guide/frame-size-guide">Specsavers frame size guide ↗</a></p>
+      </div>
+    </section>
+    <div class="page-foot-cta">
+      <h2>Find the guides closest to your outline</h2>
+      <a class="button primary" href="/face-shape-detector/">Check my face shape ↗</a>
+    </div>
+  </div>
+</Base>

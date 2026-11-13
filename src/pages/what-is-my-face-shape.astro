@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { faceShapePath, shapes, titleCase } from '../config';
+
+const clues = {
+  oval: 'Moderately longer than wide, with a gradual taper below the cheekbones.',
+  round: 'Length and width look close, with a smooth turn from cheeks to chin.',
+  square: 'The jaw stays broad below the cheeks and turns more clearly toward the chin.',
+  heart: 'The upper face stays broad while the lower face narrows toward the chin.',
+  diamond: 'The cheeks are distinctly wider than both the temples and the jaw.',
+  oblong: 'Visible length stands out relative to cheek width, even with the head level.',
+};
+---
+<Base title="What Is My Face Shape? A Step-by-Step Check" description="Find your face shape without uploading a photo. Compare face length, cheekbones, temple width and jaw contour, then narrow it down with a simple checklist." breadcrumb="What is my face shape?">
+  <div class="page-head">
+    <span class="eyebrow">A CHECK YOU CAN DO IN THE MIRROR</span>
+    <h1>What is my face shape?</h1>
+    <p>Start with length and width, then see where the outline tapers. A mirror or a straight-on photo is enough for a first comparison.</p>
+  </div>
+  <article class="article-layout">
+    <div class="notice"><strong>The quick answer:</strong> Find the widest part of your face, compare it with the visible length, and follow the sides down to the jaw. Pick the two outlines that fit best before trying to choose one.</div>
+    <h2>1. Set up a straight view</h2>
+    <p>Stand in front of a mirror with soft, even light. Hold your head level, relax your mouth and clip hair away from your temples. Ignore your ears and the silhouette of your hairstyle. For a photo, keep the camera level with your eyes and step back instead of holding a wide-angle lens close to your face.</p>
+    <p>If a shadow hides the lower jaw or your hair covers one temple, change the light or the framing before deciding. Comparing two clear views is more useful than trying to read a precise ratio from one distorted photo.</p>
+    <h2>2. Make four simple comparisons</h2>
+    <ol>
+      <li><strong>Visible length:</strong> Look from the top of the visible forehead area to the bottom of the chin. Does this look distinctly longer than the widest cheek span, or fairly close to it?</li>
+      <li><strong>Cheekbones:</strong> Find the widest horizontal span across the outer cheeks. Compare it with the spans above and below, rather than using a highlight or shadow as the edge.</li>
+      <li><strong>Temples:</strong> Check whether the upper face is almost as wide as the cheeks or noticeably narrower. A widow’s peak or the height of the hairline does not answer this question.</li>
+      <li><strong>Jaw:</strong> Check how far the width carries down the sides, then look at how the lower outline turns in toward the chin. A pointed chin and an angular jaw are different observations.</li>
+    </ol>
+    <p>If you want to use a ruler, mark the spans on a copy of the same photo and compare them in the same units. You are looking at relative widths, not physical measurements of your face. The <a href="/face-proportions/">facial proportions guide</a> shows what the ratios mean.</p>
+    <h2>3. Match the pattern you see</h2>
+    <ul>{shapes.map(shape => <li><a href={faceShapePath(shape)}>{titleCase(shape)} face shape</a>: {clues[shape]}</li>)}</ul>
+    <p>Start with the strongest clue. If length and width look close, compare round and square by looking at the jaw. If the jaw narrows below a broad upper face, compare heart and diamond by looking at the temples. If the face looks long, compare oval and oblong by looking at how strongly length stands out and how early the sides taper.</p>
+    <h2>4. Break a tie with a second view</h2>
+    <p>Suppose the jaw narrows and the cheeks look widest. If your temples are close in width to the cheeks, heart is a sensible first comparison. If your temples narrow clearly, try diamond. If hair hides the temples in one photo, retake it before deciding. Use the same process for other close pairs: find the feature that separates them, then check it in a clear view.</p>
+    <p>It is normal to keep two possibilities. The categories are useful for describing an outline and choosing styles to try. You can pick hair or glasses ideas based on the feature you want to emphasize without settling on a single label.</p>
+    <h2>Want a second look at your measurements?</h2>
+    <p>The free tool draws the length, cheek and jaw lines on your photo, compares six outlines and shows the two closest matches. The analysis runs in your browser. Use the result to see why two shapes may be close and open either guide for more context.</p>
+    <a class="button primary" href="/face-shape-detector/">Try the free face shape detector ↗</a>
+  </article>
+</Base>

@@ -1,0 +1,110 @@
+{
+  "oval": {
+    "volume": "Explore balanced volume at the crown and sides; adjust it to your hair texture and routine.",
+    "parting": "Try a center part for symmetry or an off-center part for a softer frame.",
+    "consideration": "An oval outline leaves room for many silhouettes. Hair density, texture and upkeep matter as much as shape.",
+    "hairstyles": [
+      {"id":"oval-crop","name":"Soft textured crop","description":"A short crop with a little movement follows the gentle jaw taper without adding much height.","hairLength":"short","stylePreference":"neutral","illustration":"crop"},
+      {"id":"oval-taper","name":"Relaxed taper","description":"Keep the sides tidy and leave a flexible, lightly textured top for an easy silhouette.","hairLength":"short","stylePreference":"masculine","illustration":"crop"},
+      {"id":"oval-bob","name":"Cheek-skimming bob","description":"A rounded bob creates a new horizontal line around the cheek or jaw. Choose the length with your stylist.","hairLength":"short","stylePreference":"feminine","illustration":"bob"},
+      {"id":"oval-layers","name":"Shoulder-length layers","description":"Gentle layers offer movement around the face without concentrating all the volume in one place.","hairLength":"medium","stylePreference":"neutral","illustration":"layers"},
+      {"id":"oval-curtains","name":"Loose curtain layers","description":"A flexible center or off-center part lets medium layers open around the cheekbones.","hairLength":"medium","stylePreference":"masculine","illustration":"layers"},
+      {"id":"oval-long","name":"Long flowing layers","description":"Start a few face-framing layers below the chin and let your natural texture set the rhythm.","hairLength":"long","stylePreference":"feminine","illustration":"long"}
+    ],
+    "glasses": [
+      {"id":"rectangle","name":"Soft rectangular frames","description":"A defined horizontal edge adds a little structure to a gently curved outline."},
+      {"id":"round","name":"Round frames","description":"Rounded lenses echo softer contours; choose a width that fits comfortably at the temples."},
+      {"id":"geometric","name":"Geometric frames","description":"A subtle hexagonal or angular rim can make the glasses the focal point of your look."}
+    ]
+  },
+  "round": {
+    "volume":"If you want a longer-looking silhouette, experiment with a little height at the crown and less width at cheek level.",
+    "parting":"An off-center or side part can add a diagonal line. A center part with longer layers is another option.",
+    "consideration":"Contrast is optional. A rounded cut can be just as expressive if you enjoy a soft, cohesive look.",
+    "hairstyles":[
+      {"id":"round-pixie","name":"Lifted textured pixie","description":"A softly lifted top introduces height while textured edges keep the cut relaxed.","hairLength":"short","stylePreference":"feminine","illustration":"crop"},
+      {"id":"round-quiff","name":"Low-maintenance quiff","description":"A modest rise at the front adds vertical movement without requiring a dramatic high-volume style.","hairLength":"short","stylePreference":"masculine","illustration":"crop"},
+      {"id":"round-crop","name":"Asymmetric crop","description":"A lightly side-swept fringe introduces a diagonal line around a rounded outline.","hairLength":"short","stylePreference":"neutral","illustration":"crop"},
+      {"id":"round-lob","name":"Collarbone-length lob","description":"A length below the chin with gentle front layers creates a longer frame around the face.","hairLength":"medium","stylePreference":"neutral","illustration":"bob"},
+      {"id":"round-shag","name":"Airy layered shag","description":"Keep movement at the crown and ends, with lighter layers around the widest part of the cheeks.","hairLength":"medium","stylePreference":"masculine","illustration":"layers"},
+      {"id":"round-long","name":"Long face-framing layers","description":"Longer front pieces create vertical lines while leaving plenty of room for curls or waves.","hairLength":"long","stylePreference":"feminine","illustration":"long"}
+    ],
+    "glasses":[
+      {"id":"rectangle","name":"Rectangular frames","description":"Straighter edges create contrast with a rounded facial outline."},
+      {"id":"geometric","name":"Angular geometric frames","description":"A defined bridge and angled rims introduce structure without needing a heavy frame."},
+      {"id":"cat-eye","name":"Subtle upswept frames","description":"A gentle lift at the outer corners gives a directional line across the upper face."}
+    ]
+  },
+  "square": {
+    "volume":"Soft movement around the temples and jaw can contrast with defined lower-face angles.",
+    "parting":"A relaxed side part introduces asymmetry. A center part with soft waves can frame the jaw without hiding it.",
+    "consideration":"You can soften your outline or emphasize it with a precise cut. Neither approach is more correct.",
+    "hairstyles":[
+      {"id":"square-crop","name":"Rounded textured crop","description":"Soft edges and an unstructured fringe contrast with a more angular jaw.","hairLength":"short","stylePreference":"neutral","illustration":"crop"},
+      {"id":"square-taper","name":"Scissor taper","description":"A gradual scissor-cut transition keeps the sides natural rather than sharply boxed.","hairLength":"short","stylePreference":"masculine","illustration":"crop"},
+      {"id":"square-bob","name":"Soft graduated bob","description":"A lightly graduated shape with movement at the ends can sit just above or below the jaw.","hairLength":"short","stylePreference":"feminine","illustration":"bob"},
+      {"id":"square-waves","name":"Shoulder-length waves","description":"Loose waves and flexible layers introduce curved lines around the cheek and jaw.","hairLength":"medium","stylePreference":"neutral","illustration":"layers"},
+      {"id":"square-sweep","name":"Medium side sweep","description":"A longer swept top and natural sides bring a diagonal element to a structured outline.","hairLength":"medium","stylePreference":"masculine","illustration":"layers"},
+      {"id":"square-long","name":"Long feathered layers","description":"Light layers beginning below the cheekbones add movement while keeping the length you enjoy.","hairLength":"long","stylePreference":"feminine","illustration":"long"}
+    ],
+    "glasses":[
+      {"id":"round","name":"Round metal frames","description":"Curved rims offer a clear contrast to defined jaw angles."},
+      {"id":"oval","name":"Oval frames","description":"A gently elongated oval introduces softness without adding much frame depth."},
+      {"id":"aviator","name":"Soft aviator frames","description":"A thin rim and curved lower lens can balance a more structured lower face."}
+    ]
+  },
+  "heart": {
+    "volume":"Try movement near the jaw or ends if you want to add visual width lower down.",
+    "parting":"A relaxed off-center part or side-swept fringe can create a softer transition across the upper face.",
+    "consideration":"Upper-face width is an estimate, not a hairline measurement. Choose styles around your real hair growth pattern.",
+    "hairstyles":[
+      {"id":"heart-pixie","name":"Side-swept pixie","description":"A gentle side fringe softens the upper outline while a textured finish keeps the cut light.","hairLength":"short","stylePreference":"feminine","illustration":"crop"},
+      {"id":"heart-crop","name":"Natural fringe crop","description":"Keep some softness through the fringe rather than concentrating all the height at the front.","hairLength":"short","stylePreference":"masculine","illustration":"crop"},
+      {"id":"heart-bob","name":"Jaw-length bob","description":"A bob with softly turned ends draws attention to the jaw and adds width around the lower face.","hairLength":"short","stylePreference":"neutral","illustration":"bob"},
+      {"id":"heart-layers","name":"Collarbone waves","description":"Let volume build toward the ends, with relaxed waves around the chin and shoulders.","hairLength":"medium","stylePreference":"neutral","illustration":"layers"},
+      {"id":"heart-curtains","name":"Long curtain fringe","description":"Longer front pieces frame the temples and blend into easy medium-length layers.","hairLength":"medium","stylePreference":"masculine","illustration":"layers"},
+      {"id":"heart-long","name":"Long layers with full ends","description":"Keep some weight at the ends and add face-framing movement below the cheeks.","hairLength":"long","stylePreference":"feminine","illustration":"long"}
+    ],
+    "glasses":[
+      {"id":"oval","name":"Light oval frames","description":"A light rim and curved lenses create a gentle transition from the upper face."},
+      {"id":"round","name":"Rounded lower rims","description":"A frame with a rounded, slightly deeper lower half can echo and balance the chin taper."},
+      {"id":"aviator","name":"Fine-rim aviators","description":"A thin teardrop silhouette adds shape lower down without a heavy top line."}
+    ]
+  },
+  "diamond": {
+    "volume":"Soft width near the temples or jaw can balance a cheekbone-led outline when that is your styling goal.",
+    "parting":"Try a side part or airy curtain fringe to frame a narrower upper face.",
+    "consideration":"Avoid hiding features you enjoy. Slicked-back styles can deliberately highlight cheekbones, too.",
+    "hairstyles":[
+      {"id":"diamond-crop","name":"Airy fringe crop","description":"A light fringe adds texture near the temples while leaving the cheekbones visible.","hairLength":"short","stylePreference":"neutral","illustration":"crop"},
+      {"id":"diamond-taper","name":"Soft side-part taper","description":"Leave a little width at the sides instead of taking them extremely close to the scalp.","hairLength":"short","stylePreference":"masculine","illustration":"crop"},
+      {"id":"diamond-bob","name":"Chin-length textured bob","description":"Soft ends near the chin introduce movement below the widest cheekbone region.","hairLength":"short","stylePreference":"feminine","illustration":"bob"},
+      {"id":"diamond-shag","name":"Curtain-fringe shag","description":"Airy front layers open around the temples, with relaxed movement through the ends.","hairLength":"medium","stylePreference":"neutral","illustration":"layers"},
+      {"id":"diamond-sweep","name":"Medium brushed-back layers","description":"Keep some texture at the sides for a softer silhouette while showing your cheekbones.","hairLength":"medium","stylePreference":"masculine","illustration":"layers"},
+      {"id":"diamond-long","name":"Long waves with curtain layers","description":"Soft front sections frame the upper face and blend into waves below the jaw.","hairLength":"long","stylePreference":"feminine","illustration":"long"}
+    ],
+    "glasses":[
+      {"id":"cat-eye","name":"Gentle cat-eye frames","description":"An upswept upper rim can bring emphasis to the brow and temples."},
+      {"id":"oval","name":"Oval frames","description":"Soft oval lenses follow the cheekbone area without adding more sharp angles."},
+      {"id":"browline","name":"Light browline frames","description":"An emphasized top edge shifts attention toward the upper face. Check that the fit clears your cheeks."}
+    ]
+  },
+  "oblong": {
+    "volume":"If you want a wider-looking silhouette, try volume at the sides rather than extra height at the crown.",
+    "parting":"A fringe, soft side part or loose curtain shape can break up a long vertical line.",
+    "consideration":"A longer outline is not something to correct. These ideas simply let you explore different visual proportions.",
+    "hairstyles":[
+      {"id":"oblong-crop","name":"Textured fringe crop","description":"A modest fringe and a low crown can make the outline feel more compact.","hairLength":"short","stylePreference":"masculine","illustration":"crop"},
+      {"id":"oblong-pixie","name":"Soft full-sided pixie","description":"Leave some softness at the temples instead of adding all the volume on top.","hairLength":"short","stylePreference":"feminine","illustration":"crop"},
+      {"id":"oblong-bob","name":"Rounded chin-length bob","description":"A fuller shape around the jaw creates horizontal movement and an expressive outline.","hairLength":"short","stylePreference":"neutral","illustration":"bob"},
+      {"id":"oblong-waves","name":"Shoulder-length waves","description":"Waves around the sides add width, with a fringe as an optional finishing detail.","hairLength":"medium","stylePreference":"neutral","illustration":"layers"},
+      {"id":"oblong-shag","name":"Medium shag with fringe","description":"Keep layers full around the ears and let a loose fringe interrupt the vertical line.","hairLength":"medium","stylePreference":"masculine","illustration":"layers"},
+      {"id":"oblong-long","name":"Long layers with a soft fringe","description":"If you love long hair, side volume and a soft fringe can bring a different balance to the length.","hairLength":"long","stylePreference":"feminine","illustration":"long"}
+    ],
+    "glasses":[
+      {"id":"round","name":"Deeper round frames","description":"More lens depth brings a horizontal visual break across a longer face."},
+      {"id":"rectangle","name":"Deep rectangular frames","description":"Choose a frame with comfortable depth rather than a very narrow lens."},
+      {"id":"browline","name":"Defined browline frames","description":"A visible top rim draws a horizontal line across the upper face."}
+    ]
+  }
+}

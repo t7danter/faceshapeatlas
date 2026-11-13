@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import ShapeIcon from '../components/ShapeIcon';
+import { faceShapePath, shapes, titleCase } from '../config';
+import { shapeArticles } from '../content/shape-articles';
+
+export function getStaticPaths() {
+  return shapes.map(shape => ({ params: { shape }, props: { shape } }));
+}
+
+const { shape } = Astro.props;
+const name = `${titleCase(shape)} face shape`;
+const guide = shapeArticles[shape];
+const parents = [{ name: 'Face shape guide', path: '/face-shape-guide/' }];
+const otherShapes = shapes.filter(alternative =>
+  alternative !== shape && !guide.compare.some(comparison => comparison.shape === alternative)
+);
+---
+<Base title={`${name}: Traits, Hair & Glasses`} description={guide.description} breadcrumb={name} parents={parents}>
+  <div class="page-head"><span class="eyebrow">FACE SHAPE GUIDE</span><h1>{name}</h1><p>{guide.summary}</p></div>
+  <article class="article-layout shape-article">
+    <div class="notice shape-at-a-glance"><ShapeIcon shape={shape}/><div><strong>At a glance</strong><p>{guide.snapshot}</p></div></div>
+    <h2>How to identify a {shape} face shape</h2>
+    {guide.check.map(paragraph => <p>{paragraph}</p>)}
+    <h2>{guide.comparisonTitle}</h2>
+    {guide.compare.map(({ shape: alternative, text }) => <p><a href={faceShapePath(alternative)}>{titleCase(alternative)} face shape</a>: {text}</p>)}
+    <nav class="inline-links" aria-label="Compare other face shapes">
+      {otherShapes.map(alternative => <a href={faceShapePath(alternative)}>{titleCase(alternative)} face shape</a>)}
+    </nav>
+    <h2>Hairstyles for a {shape} face shape</h2>
+    {guide.hair.map(({ title, text }) => <><h3>{title}</h3><p>{text}</p></>)}
+    <p>Find more options by length in the <a href={`/hairstyles-for-face-shapes/#${shape}`}>hairstyle guide</a>.</p>
+    <h2>Glasses for a {shape} face shape</h2>
+    {guide.glasses.map(paragraph => <p>{paragraph}</p>)}
+    <p>Compare silhouettes in the <a href={`/glasses-for-face-shapes/#${shape}`}>glasses guide</a>.</p>
+    <h2>Celebrity style reference: {guide.example.name}</h2>
+    <p>{guide.example.text} <a href={guide.example.url}>{guide.example.source}</a> shows the look. Use the styling detail as inspiration; a red carpet photo is a poor reference for measuring someone’s face.</p>
+    <h2>Check your own outline</h2>
+    <p>{guide.nextStep}</p>
+    <p>Try the <a href="/what-is-my-face-shape/">manual check</a> or see the ratios in the free tool. Its closest matches describe a single photo, and you can explore any shape for style ideas.</p>
+    <a class="button primary" href="/face-shape-detector/">Try the free face shape detector ↗</a>
+  </article>
+</Base>

@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import { brand } from '../config';
+import { isSiteIndexable } from '../lib/site-indexing';
+import { analyticsId } from '../lib/analytics-config';
+import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+interface Props {
+  title: string;
+  description: string;
+  breadcrumb?: string;
+  parents?: { name: string; path: string }[];
+  structuredData?: Record<string, unknown>[];
+  noindex?: boolean;
+}
+const { title, description, breadcrumb, parents = [], structuredData = [], noindex = false } = Astro.props;
+const site = Astro.site || new URL('https://example.com');
+const canonical = new URL(Astro.url.pathname, site);
+const indexable = !noindex && isSiteIndexable(site, import.meta.env.PUBLIC_NOINDEX);
+const measurementId = noindex ? undefined : analyticsId(site, import.meta.env.PUBLIC_NOINDEX, import.meta.env.PUBLIC_GA4_ID);
+const trail = [{ name: 'Home', path: '/' }, ...parents];
+const structured = [
+  { '@context': 'https://schema.org', '@type': 'Organization', name: brand.name, url: site.href, logo: new URL('/icons/logo.svg', site).href },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: brand.name, url: site.href },
+  ...(breadcrumb ? [{
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [...trail, { name: breadcrumb, path: Astro.url.pathname }].map(({ name, path }, i) => ({
+      '@type': 'ListItem', position: i + 1, name, item: new URL(path, site).href,
+    })),
+  }] : []),
+  ...structuredData,
+];
+const nav = [['/face-shape-detector/', 'Face detector'], ['/face-shape-guide/', 'Face shapes'], ['/hairstyles-for-face-shapes/', 'Hairstyles'], ['/glasses-for-face-shapes/', 'Glasses']];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{title} | {brand.name}</title><meta name="description" content={description}/><link rel="canonical" href={canonical}/>
+  <link rel="describedby" href={new URL('/llms.txt', site)}/>
+  <meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'}/>
+  <meta property="og:type" content="website"/><meta property="og:site_name" content={brand.name}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:image" content={new URL('/images/social-card.png', site)}/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content={`${brand.name} — discover your face shape, privately.`}/>
+  <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content={new URL('/images/social-card.png', site)}/>
+  <meta name="theme-color" content="#f6f8fd"/><link rel="icon" type="image/svg+xml" href="/icons/logo.svg"/>
+  <script type="application/ld+json" set:html={JSON.stringify(structured).replace(/</g, '\\u003c')} />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="container nav-row">
+    <a class="brand" href="/" aria-label={`${brand.name} home`}><img src="/icons/logo.svg" width="32" height="32" alt=""/><span>{brand.name}</span></a>
+    <nav class="desktop-nav" aria-label="Main navigation">{nav.map(([url, label]) => <a href={url} aria-current={Astro.url.pathname === url ? 'page' : undefined}>{label}</a>)}</nav>
+    <a class="button small primary nav-cta" href={Astro.url.pathname === '/' ? '#analyze' : '/face-shape-detector/'}>Analyze my face <span aria-hidden="true">↗</span></a>
+    <details class="mobile-menu"><summary aria-label="Open navigation">☰</summary><nav aria-label="Mobile navigation">{nav.map(([url, label]) => <a href={url}>{label}</a>)}<a href="/privacy/">Your privacy</a></nav></details>
+  </div></header>
+  <main id="main">
+    {breadcrumb && <nav class="container breadcrumb" aria-label="Breadcrumb">
+      {trail.map(({ name, path }) => <><a href={path}>{name}</a><span aria-hidden="true">/</span></>)}
+      <span aria-current="page">{breadcrumb}</span>
+    </nav>}
+    <slot />
+  </main>
+  <footer class="site-footer"><div class="container footer-grid"><div><a class="brand" href="/"><img src="/icons/logo.svg" width="32" height="32" alt=""/><span>{brand.name}</span></a><p>A little insight.<br/>A style that feels like you.</p><span class="privacy-chip">◈ Private by design</span></div><div><h3>Discover</h3><a href="/face-shape-detector/">Face shape detector</a><a href="/face-shape-guide/">Face shape guide</a><a href="/face-proportions/">Facial proportions</a></div><div><h3>Find your style</h3><a href="/hairstyles-for-face-shapes/">Hairstyle guide</a><a href="/glasses-for-face-shapes/">Glasses guide</a><a href="/faq/">Questions & answers</a></div><div><h3>About & support</h3><a href="/about/">About & methodology</a><a href="/privacy/">Privacy policy</a><a href="/contact/">Contact</a></div></div><div class="container footer-bottom"><span>© {new Date().getFullYear()} {brand.name}</span><span>Made for self-discovery. Never a beauty score.</span>{measurementId && <button type="button" id="analytics-settings" class="text-link" hidden>Analytics settings</button>}</div></footer>
+  {measurementId && <AnalyticsConsent measurementId={measurementId}/>}
+</body>
+</html>

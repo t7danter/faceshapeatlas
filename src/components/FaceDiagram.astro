@@ -1,0 +1,21 @@
+---
+const { small = false } = Astro.props;
+---
+<svg class:list={['face-diagram', { small }]} viewBox="0 0 400 460" fill="none" role="img" aria-label="Illustrative face outline showing length, cheekbone and jaw measurements. Not a real analysis.">
+  <defs><linearGradient id="skin" x1="140" y1="70" x2="300" y2="370" gradientUnits="userSpaceOnUse"><stop stop-color="#f8e5d5"/><stop offset="1" stop-color="#d6b3a2"/></linearGradient><linearGradient id="hair" x1="80" y1="60" x2="310" y2="250"><stop stop-color="#263852"/><stop offset="1" stop-color="#4a6387"/></linearGradient></defs>
+  <ellipse cx="200" cy="414" rx="143" ry="16" fill="#8fabdf" opacity=".12"/>
+  <path d="M81 410c8-42 34-58 83-67h72c49 9 75 25 83 67" fill="#dbe7ff"/>
+  <path d="M167 297v47q32 34 66 0v-47" fill="url(#skin)"/>
+  <path d="M88 210C55 121 98 48 193 44c100-8 143 55 123 177l-11 128-71-21H146l-62 21Z" fill="url(#hair)"/>
+  <ellipse cx="100" cy="218" rx="16" ry="32" fill="#d9b6a6"/><ellipse cx="300" cy="218" rx="16" ry="32" fill="#d9b6a6"/>
+  <path d="M104 169C103 105 148 85 200 85c64 0 95 40 96 84l-8 82c-6 46-46 85-88 89-42-4-82-43-88-89Z" fill="url(#skin)"/>
+  <path d="M98 189c-23-84 43-133 108-115 56-15 101 32 99 100-41-14-62-51-76-78-22 40-66 69-131 93Z" fill="url(#hair)"/>
+  <path d="M131 196q22-12 42-2m54 0q20-10 42 2" stroke="#65515a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M134 212q18-10 34 0m64 0q17-10 34 0" stroke="#65515a" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="151" cy="211" rx="4" ry="5" fill="#65515a"/><ellipse cx="249" cy="211" rx="4" ry="5" fill="#65515a"/>
+  <path d="m201 216-7 38q5 5 14 0" stroke="#b08b7c" stroke-width="2" stroke-linecap="round"/><path d="M177 281q23 17 46 0-24 3-46 0Z" fill="#af7f7f"/>
+  <path d="M114 161C138 107 262 107 286 161l4 70c-4 57-52 102-90 110-38-8-86-53-90-110Z" stroke="#104feb" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <g stroke="#fff" stroke-width="1.5"><path d="M109 234h182M131 292h138M200 124v216"/><path d="M109 228v12m182-12v12M131 286v12m138-12v12M194 124h12m-12 216h12"/></g>
+  <g fill="#fff" stroke="#104feb" stroke-width="1.3"><circle cx="200" cy="124" r="4"/><circle cx="200" cy="340" r="4"/><circle cx="109" cy="234" r="4"/><circle cx="291" cy="234" r="4"/><circle cx="131" cy="292" r="4"/><circle cx="269" cy="292" r="4"/><circle cx="114" cy="161" r="3"/><circle cx="286" cy="161" r="3"/></g>
+  <path d="M314 124h15v216h-15" stroke="#7c9fdf" stroke-width="1"/>
+</svg>

@@ -1,0 +1,6 @@
+---
+import Base from '../layouts/Base.astro';
+import { brand } from '../config';
+import FAQ from '../components/FAQ.astro';
+---
+<Base title="Questions & Answers: Photos, Results & Privacy" description={`Answers to common questions about ${brand.name}: photo quality, accuracy, local processing, camera permissions, style suggestions and report downloads.`} breadcrumb="Questions & answers"><div class="page-head"><span class="eyebrow">CLEAR ANSWERS</span><h1>A few things to know.</h1><p>Understand what the tool does, how your photo is handled, and what your result means.</p></div><div class="article-layout"><FAQ all/><p style="margin-top:30px">For more detail, read our <a href="/privacy/">privacy policy</a> or <a href="/about/">methodology</a>.</p></div></Base>

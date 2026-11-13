@@ -1,0 +1,96 @@
+---
+interface Props { measurementId: string; }
+const { measurementId } = Astro.props;
+---
+<div id="analytics-consent" data-id={measurementId} hidden>
+  <p>Allow Google Analytics to measure page visits? Your photos and results stay on your device.</p>
+  <div class="button-row">
+    <button type="button" class="button small" data-choice="declined">Decline</button>
+    <button type="button" class="button small primary" data-choice="accepted">Allow analytics</button>
+  </div>
+</div>
+
+<script>
+  const panel = document.querySelector<HTMLElement>('#analytics-consent');
+  const id = panel?.dataset.id;
+  if (panel && id && location.origin === 'https://faceshapeatlas.com') {
+    const key = 'faceshapeatlas-analytics';
+    const state = window as unknown as Record<string, unknown>;
+    let loaded = false;
+    let preference: string | null = null;
+    try { preference = localStorage.getItem(key); } catch { /* The choice applies to this page. */ }
+
+    function enableAnalytics() {
+      if (location.search || location.hash) return;
+      state['ga-disable-' + id] = false;
+      if (loaded) return;
+      loaded = true;
+      const queue: unknown[] = [];
+      state.dataLayer = queue;
+      const gtag: (...args: unknown[]) => void = function () {
+        // Google Tag expects command entries in its documented arguments format.
+        // eslint-disable-next-line prefer-rest-params
+        queue.push(arguments);
+      };
+      gtag('consent', 'default', {
+        analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+      });
+      gtag('js', new Date());
+      const page = {
+        page_location: location.origin + location.pathname,
+        page_referrer: document.referrer ? new URL(document.referrer).origin + '/' : '',
+      };
+      gtag('config', id, {
+        allow_google_signals: false, allow_ad_personalization_signals: false,
+        ...page,
+      });
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id!);
+      document.head.append(script);
+    }
+
+    if (preference === 'accepted') enableAnalytics();
+    else if (preference !== 'declined') panel.hidden = false;
+    const settings = document.querySelector<HTMLButtonElement>('#analytics-settings');
+    if (settings) {
+      settings.hidden = false;
+      settings.addEventListener('click', () => {
+        panel.hidden = false;
+        panel.querySelector('button')?.focus();
+      });
+    }
+    panel.addEventListener('click', event => {
+      const choice = (event.target as HTMLElement).closest<HTMLElement>('[data-choice]')?.dataset.choice;
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch { /* Keep the in-page setting. */ }
+      if (choice === 'accepted') enableAnalytics();
+      else {
+        state['ga-disable-' + id] = true;
+        for (const cookie of ['_ga', '_ga_' + id.slice(2)]) {
+          document.cookie = cookie + '=; Max-Age=0; Path=/';
+          document.cookie = cookie + '=; Max-Age=0; Path=/; Domain=faceshapeatlas.com';
+        }
+      }
+      panel.hidden = true;
+    });
+  }
+</script>
+
+<style>
+  #analytics-consent {
+    position: fixed;
+    z-index: 20;
+    right: 16px;
+    bottom: 16px;
+    width: min(380px, calc(100% - 32px));
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: 0 4px 24px #14233f1a;
+  }
+  p { font-size: .85rem; margin-bottom: 12px; }
+  .button-row { justify-content: flex-end; }
+  @media print { #analytics-consent { display: none; } }
+</style>

@@ -1,0 +1,6 @@
+---
+import { faqs } from '../content';
+interface Props { all?: boolean; items?: typeof faqs; }
+const { all = false, items = all ? faqs : faqs.slice(0, 5) } = Astro.props;
+---
+<div class="faq-list">{items.map(({ q, a }) => <details><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div>
